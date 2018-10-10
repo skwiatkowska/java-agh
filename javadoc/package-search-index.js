@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"lab1.Pesel"},{"l":"lab1.Zad"}]

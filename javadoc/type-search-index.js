@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"lab1.Zad","l":"DataFrame"},{"p":"lab1.Zad","l":"DataFrameProgram"},{"p":"lab1.Pesel","l":"PESEL"},{"p":"lab1.Pesel","l":"PESELProgram"}]
