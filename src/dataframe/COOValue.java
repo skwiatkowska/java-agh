@@ -16,5 +16,4 @@ final public class COOValue {
     public String getSecond(){
         return second;
     }
-
 }
