@@ -41,7 +41,7 @@ public class Main {
         sdf.print();
 
 
-        DataFrame df2 = new DataFrame("C:\\Users\\Win10\\Documents\\java-exercises\\src\\dataframe\\data.csv",
+        DataFrame df2 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\data.csv",
                 new String[]{"double", "double", "double"});
         System.out.println("data.csv:\tLoaded " + df2.size() + " records.");
 
@@ -49,7 +49,7 @@ public class Main {
         DataFrame firstRow = df2.iloc(0);
         firstRow.print();
 
-        SparseDataFrame sdf3 = new SparseDataFrame("C:\\Users\\Win10\\Documents\\java-exercises\\src\\dataframe\\sparse.csv",
+        SparseDataFrame sdf3 = new SparseDataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\sparse.csv",
                 new String[]{"double", "double", "double"}, "0.0");
         System.out.println("sparse.csv:\tLoaded " + sdf3.size() + " records.");
 
