@@ -41,7 +41,7 @@ public class DataFrame {
             while ((line = br.readLine()) != null) {
                 String[] row = line.split(separator);
                 for (int i = 0; i < types.size(); i++) {
-                    data.get(i).add(getInstance(types.get(i)).create(row[i]));
+                    data.get(i).add(Value.getInstance(types.get(i)).create(row[i]));
                 }
             }
             br.close();
@@ -79,7 +79,7 @@ public class DataFrame {
                 }
                 String[] row = line.split(separator);
                 for (int i = 0; i < types.size(); i++) {
-                    data.get(i).add(getInstance(types.get(i)).create(row[i]));
+                    data.get(i).add(Value.getInstance(types.get(i)).create(row[i]));
                 }
             }
             br.close();
@@ -91,22 +91,7 @@ public class DataFrame {
         }
     }
 
-    public static Value getInstance(Class<? extends Value> c) {
-        switch (c.getName()) {
-            case "dataframe.IntegerValue":
-                return new IntegerValue();
-            case "dataframe.DoubleValue":
-                return new DoubleValue();
-            case "dataframe.StringValue":
-                return new StringValue();
-            case "dataframe.FloatValue":
-                return new FloatValue();
-            case "dataframe.DateTimeValue":
-                return new DateTimeValue();
-            default:
-                throw new IllegalArgumentException("Unknown class type.");
-        }
-    }
+
 
     public ArrayList get(String colname) {
         for (int i = 0; i < names.length; i++) {

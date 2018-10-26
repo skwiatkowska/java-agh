@@ -24,7 +24,7 @@ public class SparseDataFrame extends DataFrame {
 
         for (int i = 0; i < names.length; i++) {
             for (int j = 0; j < _df.data.get(0).size(); j++) {
-                if (!(_df.data.get(i).get(j).equals(getInstance(_df.types.get(i)).create(hide)))) {
+                if (!(_df.data.get(i).get(j).equals(Value.getInstance(_df.types.get(i)).create(hide)))) {
                     data.get(i).add(new COOValue(j, _df.data.get(i).get(j)));
                 }
             }
@@ -54,7 +54,7 @@ public class SparseDataFrame extends DataFrame {
                 String[] row = line.split(separator);
                 for (int i = 0; i < row.length; i++) {
                     if (!(row[i].equals(hide.toString()))) {
-                        data.get(i).add(new COOValue(rowsCounter, getInstance(types.get(i)).create(row[i])));
+                        data.get(i).add(new COOValue(rowsCounter, Value.getInstance(types.get(i)).create(row[i])));
                     }
                 }
                 rowsCounter++;
@@ -97,7 +97,7 @@ public class SparseDataFrame extends DataFrame {
                 String[] row = line.split(separator);
                 for (int i = 0; i < row.length; i++) {
                     if (!(row[i].equals(hide.toString()))) {
-                        data.get(i).add(new COOValue(rowsCounter, getInstance(types.get(i)).create(row[i])));
+                        data.get(i).add(new COOValue(rowsCounter, Value.getInstance(types.get(i)).create(row[i])));
                     }
                 }
                 rowsCounter++;
@@ -131,7 +131,7 @@ public class SparseDataFrame extends DataFrame {
             index = 0;
             for (int j = 0; j < data.get(i).size(); j++) {
                 while (index < ((COOValue) data.get(i).get(j)).first) {
-                    newDf.data.get(i).add(getInstance(newDf.types.get(i)).create(hide));
+                    newDf.data.get(i).add(Value.getInstance(newDf.types.get(i)).create(hide));
                     index++;
                 }
                 newDf.data.get(i).add(((COOValue) data.get(i).get(j)).second);
@@ -142,7 +142,7 @@ public class SparseDataFrame extends DataFrame {
         int SDFSize = this.size();
         for (int i = 0; i < names.length; i++) {
             while (newDf.data.get(i).size() < SDFSize) {
-                newDf.data.get(i).add(getInstance(newDf.types.get(i)).create(hide));
+                newDf.data.get(i).add(Value.getInstance(newDf.types.get(i)).create(hide));
             }
         }
         return newDf;
@@ -197,7 +197,7 @@ public class SparseDataFrame extends DataFrame {
         int SDFSize = this.size();
         for (int i = 0; i < newDf.names.length; i++) {
             while (newDf.data.get(i).size() < SDFSize) {
-                newDf.data.get(i).add(getInstance(newDf.types.get(i)).create(hide));
+                newDf.data.get(i).add(Value.getInstance(newDf.types.get(i)).create(hide));
             }
         }
         return newDf;
@@ -207,7 +207,7 @@ public class SparseDataFrame extends DataFrame {
     public DataFrame iloc(int i) {
         DataFrame newDf = new DataFrame(names, types);
         for (int j = 0; j < names.length; ++j) {
-            newDf.data.get(j).add(getInstance(newDf.types.get(i)).create(hide));
+            newDf.data.get(j).add(Value.getInstance(newDf.types.get(i)).create(hide));
         }
         for (int j = 0; j < names.length; ++j) {
             for (int k = 0; k < data.get(j).size(); k++) {
@@ -224,7 +224,7 @@ public class SparseDataFrame extends DataFrame {
         DataFrame newDf = new DataFrame(names, types);
         for (int i = from; i <= to; i++) {
             for (int j = 0; j < names.length; j++) {
-                newDf.data.get(j).add(getInstance(newDf.types.get(i)).create(hide));
+                newDf.data.get(j).add(Value.getInstance(newDf.types.get(i)).create(hide));
             }
         }
 

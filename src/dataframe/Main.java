@@ -16,14 +16,14 @@ public class Main {
         types1.add(datev.getClass());
 
         DataFrame df1 = new DataFrame(new String[] {"kol1", "kol2", "kol3", "kol4"}, types1);
-        df1.data.get(0).add(DataFrame.getInstance(df1.types.get(0)).create("2"));
-        df1.data.get(1).add(DataFrame.getInstance(df1.types.get(1)).create("2.2"));
-        df1.data.get(2).add(DataFrame.getInstance(df1.types.get(2)).create("1.1"));
-        df1.data.get(3).add(DataFrame.getInstance(df1.types.get(3)).create("11.11.2011"));
-        df1.data.get(0).add(DataFrame.getInstance(df1.types.get(0)).create("9"));
-        df1.data.get(1).add(DataFrame.getInstance(df1.types.get(1)).create("5.5"));
-        df1.data.get(2).add(DataFrame.getInstance(df1.types.get(2)).create("0.3"));
-        df1.data.get(3).add(DataFrame.getInstance(df1.types.get(3)).create("5.03.2000"));
+        df1.data.get(0).add(Value.getInstance(df1.types.get(0)).create("2"));
+        df1.data.get(1).add(Value.getInstance(df1.types.get(1)).create("2.2"));
+        df1.data.get(2).add(Value.getInstance(df1.types.get(2)).create("1.1"));
+        df1.data.get(3).add(Value.getInstance(df1.types.get(3)).create("11.11.2011"));
+        df1.data.get(0).add(Value.getInstance(df1.types.get(0)).create("9"));
+        df1.data.get(1).add(Value.getInstance(df1.types.get(1)).create("5.5"));
+        df1.data.get(2).add(Value.getInstance(df1.types.get(2)).create("0.3"));
+        df1.data.get(3).add(Value.getInstance(df1.types.get(3)).create("5.03.2000"));
 
         df1.print("DF1");
 
@@ -33,10 +33,10 @@ public class Main {
         types2.add(intv.getClass());
 
         SparseDataFrame sdf1 = new SparseDataFrame(new String[]{"kol1", "kol2"}, types2, "0");
-        sdf1.data.get(0).add(new COOValue(1,DataFrame.getInstance(sdf1.types.get(0)).create("1")));
-        sdf1.data.get(1).add(new COOValue(0,DataFrame.getInstance(sdf1.types.get(0)).create("2")));
-        sdf1.data.get(0).add(new COOValue(4,DataFrame.getInstance(sdf1.types.get(0)).create("3")));
-        sdf1.data.get(1).add(new COOValue(7,DataFrame.getInstance(sdf1.types.get(0)).create("4")));
+        sdf1.data.get(0).add(new COOValue(1,Value.getInstance(sdf1.types.get(0)).create("1")));
+        sdf1.data.get(1).add(new COOValue(0,Value.getInstance(sdf1.types.get(0)).create("2")));
+        sdf1.data.get(0).add(new COOValue(4,Value.getInstance(sdf1.types.get(0)).create("3")));
+        sdf1.data.get(1).add(new COOValue(7,Value.getInstance(sdf1.types.get(0)).create("4")));
         sdf1.print("SDF");
 
         DataFrame twoCols = df1.get(new String[]{"kol1", "kol2"}, true);
