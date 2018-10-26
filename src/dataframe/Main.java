@@ -43,7 +43,6 @@ public class Main {
         DataFrame twoCols = df1.get(new String[]{"kol1", "kol2"}, true);
         twoCols.print("Two cols from DF1");
 
-
         DataFrame df2 = sdf1.toDense();
         df2.print("DF2 received from SDF1");
 
@@ -55,14 +54,14 @@ public class Main {
         types3.add(dbv.getClass());
         types3.add(dbv.getClass());
 
-        DataFrame df3 = new DataFrame("C:\\Users\\Win10\\Documents\\java-exercises\\src\\dataframe\\data.csv",
+        DataFrame df3 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\data.csv",
                 types3);
         System.out.println("data.csv:\tLoaded " + df3.size() + " records.");
 
         DataFrame firstRow = df3.iloc(0);
         firstRow.print("data.csv:\tFirst row: ");
 
-        SparseDataFrame sdf3 = new SparseDataFrame("C:\\Users\\Win10\\Documents\\java-exercises\\src\\dataframe\\sparse.csv",
+        SparseDataFrame sdf3 = new SparseDataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\sparse.csv",
                 types3, "0.0");
         System.out.println("sparse.csv:\tLoaded " + sdf3.size() + " records.");
 
