@@ -4,7 +4,8 @@ select left(rtrim(p.nazwa ||' - '|| p.opis),50) as "Pudelko", left(rtrim(z.sztuk
 from pudelka p natural join zawartosc z join czekoladki c using(idczekoladki)
 order by 1;
 --2
-select p.idpudelka as "Id", left(rtrim(p.nazwa ||' - '|| p.opis),45) as "Pudelko", left(rtrim(z.sztuk || '-' || c.nazwa || ' - ' || c.opis),45) as "Zawartość"
+select p.idpudelka as "Id", left(rtrim(p.nazwa ||' - '|| p.opis),45) as "Pudelko", 
+left(rtrim(z.sztuk || '-' || c.nazwa || ' - ' || c.opis),45) as "Zawartość"
 from pudelka p natural join zawartosc z join czekoladki c using(idczekoladki)
 where p.idpudelka = 'heav'
 order by 2;
