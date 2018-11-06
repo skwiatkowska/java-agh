@@ -1,3 +1,4 @@
+--LAB 4
 --4.4
 --1
 select left(rtrim(p.nazwa ||' - '|| p.opis),50) as "Pudelko", left(rtrim(z.sztuk || '-' || c.nazwa || ' - ' || c.opis),50) as "Zawartość"
