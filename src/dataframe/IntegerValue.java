@@ -3,7 +3,7 @@ package dataframe;
 import java.util.Objects;
 
 
-public class IntegerValue extends Value {
+public class IntegerValue extends Value implements Cloneable, Comparable<Value> {
     protected int value;
 
 
@@ -23,24 +23,34 @@ public class IntegerValue extends Value {
 
 
     public Value add(Value v) {
-        if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue) {
-            return new IntegerValue(value + (int) v.value);
-        }
+        if (v instanceof IntegerValue)
+            return new IntegerValue(value + Integer.parseInt(v.toString()));
+        else if (v instanceof DoubleValue)
+            return new DoubleValue(value + Double.parseDouble(v.toString()));
+        else if (v instanceof FloatValue)
+            return new FloatValue(value + Float.parseFloat(v.toString()));
         throw new IllegalArgumentException("Different objects' types.");
     }
 
 
     public Value sub(Value v) {
-        if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue) {
-            return new IntegerValue(value - (int) v.value);
-        }
+        if (v instanceof IntegerValue)
+            return new IntegerValue(value - Integer.parseInt(v.toString()));
+        else if (v instanceof DoubleValue)
+            return new DoubleValue(value - Double.parseDouble(v.toString()));
+        else if (v instanceof FloatValue)
+            return new FloatValue(value - Float.parseFloat(v.toString()));
         throw new IllegalArgumentException("Different objects' types.");
     }
 
 
     public Value mul(Value v) {
-        if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return new IntegerValue(value * (int) v.value);
+        if (v instanceof IntegerValue)
+            return new IntegerValue(value * Integer.parseInt(v.toString()));
+        else if (v instanceof DoubleValue)
+            return new DoubleValue(value * Double.parseDouble(v.toString()));
+        else if (v instanceof FloatValue)
+            return new FloatValue(value * Float.parseFloat(v.toString()));
         else
             throw new IllegalArgumentException("Different objects' types.");
     }
@@ -49,20 +59,25 @@ public class IntegerValue extends Value {
     public Value div(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue) {
             try {
-                return (new IntegerValue(value / (int) v.value));
+                return new DoubleValue(value / Double.parseDouble(v.toString()));
 
             } catch (ArithmeticException e) {
                 System.out.println("Cannot divide by 0.");
             }
-
         }
         throw new IllegalArgumentException("Different objects' types.");
     }
 
 
     public Value pow(Value v) {
-        if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return (new DoubleValue((double) Math.pow(value, (double) v.value)));
+        if (v instanceof IntegerValue) {
+            Double doublePow = Math.pow(value, Integer.parseInt(v.toString()));
+            return new IntegerValue(doublePow.intValue());
+        }
+        else if (v instanceof DoubleValue)
+            return new DoubleValue(Math.pow(value, Double.parseDouble(v.toString())));
+        else if (v instanceof FloatValue)
+            return new FloatValue((float) Math.pow(value, Double.parseDouble(v.toString())));
         else
             throw new IllegalArgumentException("Different objects' types.");
     }
@@ -70,7 +85,7 @@ public class IntegerValue extends Value {
 
     public boolean eq(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return (double) v.value == value;
+            return value == Integer.parseInt(v.toString());
         else
             throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
@@ -78,7 +93,7 @@ public class IntegerValue extends Value {
 
     public boolean lte(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return value <= (double) v.value;
+            return value <= Integer.parseInt(v.toString());
         else
             throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
@@ -86,7 +101,7 @@ public class IntegerValue extends Value {
 
     public boolean lt(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return value < (double) v.value;
+            return value < Integer.parseInt(v.toString());
         else
             throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
@@ -94,7 +109,7 @@ public class IntegerValue extends Value {
 
     public boolean gte(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return value >= (double) v.value;
+            return value >= Integer.parseInt(v.toString());
         else
             throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
@@ -102,7 +117,7 @@ public class IntegerValue extends Value {
 
     public boolean gt(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
-            return value > (double) v.value;
+            return value >= Integer.parseInt(v.toString());
         else
             throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
@@ -131,5 +146,17 @@ public class IntegerValue extends Value {
     public Value create(String s) {
         value = Integer.parseInt(s);
         return this;
+    }
+
+
+    public IntegerValue clone() throws CloneNotSupportedException {
+        return (IntegerValue) super.clone();
+    }
+
+
+    public int compareTo(Value v) {
+        if (v instanceof IntegerValue)
+            return compareValuesOfTheSameInstance(v);
+        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
 }

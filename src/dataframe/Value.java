@@ -1,6 +1,6 @@
 package dataframe;
 
-public abstract class Value {
+public abstract class Value implements Cloneable, Comparable<Value> {
     protected Object value;
 
     public abstract String toString();
@@ -19,7 +19,6 @@ public abstract class Value {
     public abstract int hashCode();
     public abstract Value create(String s);
 
-
     public static Value getInstance(Class<? extends Value> c) {
         switch (c.getName()) {
             case "dataframe.IntegerValue":
@@ -37,4 +36,16 @@ public abstract class Value {
         }
     }
 
+    public Value clone() throws CloneNotSupportedException{
+        return (Value)super.clone();
+    }
+
+    public abstract int compareTo(Value v);
+    public int compareValuesOfTheSameInstance(Value v) {
+        if(this.lt(v))
+            return -1;
+        else if(this.eq(v))
+            return 0;
+        else return 1;
+    }
 }

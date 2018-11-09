@@ -4,69 +4,58 @@ import java.util.ArrayList;
 
 
 public class Main {
-    public static void main(String[] argv){
+
+    public static void main(String[] argv) {
         IntegerValue intv = new IntegerValue();
         DoubleValue dbv = new DoubleValue();
+        FloatValue flv = new FloatValue();
         DateTimeValue datev = new DateTimeValue();
+        StringValue strv = new StringValue();
 
-        ArrayList<Class<? extends Value>> types1 = new ArrayList<Class<? extends Value>>();
+
+        ArrayList<Class<? extends Value>> types1 = new ArrayList<>();
+        types1.add(strv.getClass());
         types1.add(intv.getClass());
-        types1.add(dbv.getClass());
-        types1.add(dbv.getClass());
-        types1.add(datev.getClass());
+        types1.add(intv.getClass());
+        ArrayList<String> names1 = new ArrayList<>();
+        names1.add("id");
+        names1.add("v1");
+        names1.add("v2");
+        DataFrame df1 = new DataFrame(names1, types1);
 
-        DataFrame df1 = new DataFrame(new String[] {"kol1", "kol2", "kol3", "kol4"}, types1);
-        df1.data.get(0).add(Value.getInstance(df1.types.get(0)).create("2"));
-        df1.data.get(1).add(Value.getInstance(df1.types.get(1)).create("2.2"));
-        df1.data.get(2).add(Value.getInstance(df1.types.get(2)).create("1.1"));
-        df1.data.get(3).add(Value.getInstance(df1.types.get(3)).create("11.11.2011"));
-        df1.data.get(0).add(Value.getInstance(df1.types.get(0)).create("9"));
-        df1.data.get(1).add(Value.getInstance(df1.types.get(1)).create("5.5"));
-        df1.data.get(2).add(Value.getInstance(df1.types.get(2)).create("0.3"));
-        df1.data.get(3).add(Value.getInstance(df1.types.get(3)).create("5.03.2000"));
 
+        df1.addRow(new String[]{"a", "10", "20"});
+        df1.addRow(new String[]{"b", "11", "100"});
+        df1.addRow(new String[]{"a", "10", "1000"});
+        df1.addRow(new String[]{"b", "7", "-1"});
+        df1.addRow(new String[]{"b", "7", "0"});
+        df1.addRow(new String[]{"c", "3", "-7"});
         df1.print("DF1");
+        DataFrame grp1 = df1.groupBy("id").max();
+        grp1.print("Select max, group by id");
+
+        ArrayList<Class<? extends Value>> types2 = new ArrayList<>();
+        types2.add(strv.getClass());
+        types2.add(datev.getClass());
+        types2.add(flv.getClass());
+        types2.add(flv.getClass());
+
+        DataFrame df2 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\groupby.csv", types2);
+        System.out.println("Loaded " + df2.size() + " records.");
+
+        DataFrame grp2 = df2.groupBy("id").max();
+        grp2.print("Select max, grouped by id, groupby.csv");
 
 
-        ArrayList<Class<? extends Value>> types2 = new ArrayList<Class<? extends Value>>();
-        types2.add(intv.getClass());
-        types2.add(intv.getClass());
-
-        SparseDataFrame sdf1 = new SparseDataFrame(new String[]{"kol1", "kol2"}, types2, "0");
-        sdf1.data.get(0).add(new COOValue(1,Value.getInstance(sdf1.types.get(0)).create("1")));
-        sdf1.data.get(1).add(new COOValue(0,Value.getInstance(sdf1.types.get(0)).create("2")));
-        sdf1.data.get(0).add(new COOValue(4,Value.getInstance(sdf1.types.get(0)).create("3")));
-        sdf1.data.get(1).add(new COOValue(7,Value.getInstance(sdf1.types.get(0)).create("4")));
-        sdf1.print("SDF");
-
-        DataFrame twoCols = df1.get(new String[]{"kol1", "kol2"}, true);
-        twoCols.print("Two cols from DF1");
-
-        DataFrame df2 = sdf1.toDense();
-        df2.print("DF2 received from SDF1");
-
-        SparseDataFrame sdf2 = new SparseDataFrame(df2, "0");
-        sdf2.print("SDF2 received from DF2");
-
-        ArrayList<Class<? extends Value>> types3 = new ArrayList<Class<? extends Value>>();
+        ArrayList<Class<? extends Value>> types3 = new ArrayList<>();
+        types3.add(strv.getClass());
+        types3.add(datev.getClass());
         types3.add(dbv.getClass());
         types3.add(dbv.getClass());
-        types3.add(dbv.getClass());
+        DataFrame df3 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\groubymulti.csv", types3);
+        System.out.println("Loaded " + df3.size() + " records.");
 
-        DataFrame df3 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\data.csv",
-                types3);
-        System.out.println("data.csv:\tLoaded " + df3.size() + " records.");
-
-        DataFrame firstRow = df3.iloc(0);
-        firstRow.print("data.csv:\tFirst row: ");
-
-        SparseDataFrame sdf3 = new SparseDataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\sparse.csv",
-                types3, "0.0");
-        System.out.println("sparse.csv:\tLoaded " + sdf3.size() + " records.");
-
-        System.out.print("sparse.csv:\tColumns' sizes after conversion: ");
-        for(int i = 0; i < sdf3.names.length; i++){
-            System.out.print(sdf3.data.get(i).size() + "\t");
-        }
+        DataFrame grp3 = df3.groupBy(new String[]{"id","date"}).min();
+        grp3.print("Select min, grouped by id, date, groubymulti.csv");
     }
 }

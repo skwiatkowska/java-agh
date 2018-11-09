@@ -1,8 +1,9 @@
 package dataframe;
 
+import java.security.InvalidParameterException;
 import java.util.Objects;
 
-public class COOValue extends Value {
+public class COOValue extends Value implements Cloneable, Comparable<Value> {
     protected int first;
     protected Value second;
 
@@ -101,8 +102,23 @@ public class COOValue extends Value {
 
 
     public Value create(String s) {
+        throw new InvalidParameterException("New COOValue object cannot be created straight from a string. " +
+                "COOValue objects are accessible only after converting DataFrame to SparseDataFrame.");
+    }
 
+    public StringValue clone() throws CloneNotSupportedException {
+        return (StringValue) super.clone();
+    }
 
-        return this;
+    public int compareTo(Value v){
+        if (v instanceof COOValue){
+            if (first==((COOValue) v).first && second.eq(((COOValue) v).second))
+                return 0;
+            else if (first<((COOValue) v).first || second.lt(((COOValue) v).second))
+                return -1;
+            else
+                return 1;
+        }
+        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
     }
 }
