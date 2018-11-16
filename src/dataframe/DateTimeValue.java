@@ -26,6 +26,7 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
         value = LocalDate.ofInstant(_date.toInstant(), ZoneId.systemDefault());
     }
 
+
     public DateTimeValue(LocalDate _date) {
         value = _date;
     }
@@ -40,32 +41,32 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
 
     public Value add(Value v) { //add v days to date
         if (v instanceof IntegerValue) {
-            return new DateTimeValue(value.plusDays(((IntegerValue)v).value));
+            return new DateTimeValue(value.plusDays(((IntegerValue) v).value));
         }
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value sub(Value v) { //subtract v days from date
         if (v instanceof IntegerValue) {
-            return new DateTimeValue(value.minusDays(((IntegerValue)v).value));
+            return new DateTimeValue(value.minusDays(((IntegerValue) v).value));
         }
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value mul(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value div(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value pow(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
@@ -73,8 +74,8 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
         if (v instanceof DateTimeValue)
             return value.equals(((DateTimeValue) v).value);
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
-
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -82,28 +83,32 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
         if (v instanceof DateTimeValue)
             return (value.isBefore(((DateTimeValue) v).value) || value.isEqual(((DateTimeValue) v).value));
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean lt(Value v) {
         if (v instanceof DateTimeValue)
             return value.isBefore(((DateTimeValue) v).value);
-        else throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        else throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean gte(Value v) {
         if (v instanceof DateTimeValue)
             return (value.isAfter(((DateTimeValue) v).value) || value.isEqual(((DateTimeValue) v).value));
-        else throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        else throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean gt(Value v) {
         if (v instanceof DateTimeValue)
             return value.isAfter(((DateTimeValue) v).value);
-        else throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        else throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -113,6 +118,18 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
 
 
     public Value create(String s) {
+        int i = 0;
+        int len = s.length();
+        boolean correct = false;
+        while (i < len) {
+            char digit = s.charAt(i);
+            if ((int) digit == 45 || ((int) digit >= 48 && (int) digit <= 57)) {
+                correct = true;
+            }
+            else
+                throw new NumberFormatException();
+            i++;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         value = LocalDate.parse(s, formatter);
         return this;
@@ -138,9 +155,11 @@ public class DateTimeValue extends Value implements Cloneable, Comparable<Value>
         return Objects.hash(value);
     }
 
-    public int compareTo(Value v){
+
+    public int compareTo(Value v) {
         if (v instanceof DateTimeValue)
             return compareValuesOfTheSameInstance(v);
-        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 }

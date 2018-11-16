@@ -1,6 +1,9 @@
 package dataframe;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,9 +47,10 @@ public class SparseDataFrame extends DataFrame {
 
         String separator = ",";
 
+        BufferedReader br = null;
         try {
-            FileInputStream fstream = new FileInputStream(path);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            //FileInputStream fstream = new FileInputStream(path);
+            br = new BufferedReader(new FileReader(path));
 
             String line;
             int rowsCounter = 0;
@@ -55,17 +59,23 @@ public class SparseDataFrame extends DataFrame {
                 String[] row = line.split(separator);
                 for (int i = 0; i < row.length; i++) {
                     if (!(row[i].equals(hide))) {
-                        data.get(i).add(new COOValue(rowsCounter, Value.getInstance(types.get(i)).create(row[i])));
+                        data.get(i).add(new COOValue(rowsCounter, createValueOfExtactType(row[i], i)));
                     }
                 }
                 rowsCounter++;
             }
-            br.close();
-
         } catch (FileNotFoundException e) {
-            System.out.println("No such file.");
+            System.out.println("Wrong file path or there is not such file.");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -81,9 +91,10 @@ public class SparseDataFrame extends DataFrame {
         boolean header = true;
         String separator = ",";
 
+        BufferedReader br = null;
         try {
-            FileInputStream fstream = new FileInputStream(path);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            //FileInputStream fstream = new FileInputStream(path);
+            br = new BufferedReader(new FileReader(path));
 
             String line;
             int rowsCounter = 0;
@@ -98,17 +109,23 @@ public class SparseDataFrame extends DataFrame {
                 String[] row = line.split(separator);
                 for (int i = 0; i < row.length; i++) {
                     if (!(row[i].equals(hide))) {
-                        data.get(i).add(new COOValue(rowsCounter, Value.getInstance(types.get(i)).create(row[i])));
+                        data.get(i).add(new COOValue(rowsCounter, createValueOfExtactType(row[i], i)));
                     }
                 }
                 rowsCounter++;
             }
-            br.close();
-
         } catch (FileNotFoundException e) {
-            System.out.println("No such file.");
+            System.out.println("Wrong file path or there is not such file.");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

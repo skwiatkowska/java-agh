@@ -32,6 +32,9 @@ public class Median implements Applyable {
 
 
     public Value getMedian(ArrayList<Value> list) {
+        if (list == null || list.isEmpty()) {
+            throw new NullPointerException("Null or empty column.");
+        }
         Collections.sort(list);
         int middle = list.size() / 2;
 

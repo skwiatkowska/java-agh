@@ -28,22 +28,22 @@ public class StringValue extends Value implements Cloneable, Comparable<Value> {
 
 
     public Value sub(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value mul(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value div(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value pow(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
@@ -55,28 +55,32 @@ public class StringValue extends Value implements Cloneable, Comparable<Value> {
     public boolean lte(Value v) {
         if (v instanceof StringValue)
             return (value.compareTo(((StringValue) v).value) <= 0);
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean lt(Value v) {
         if (v instanceof StringValue)
             return (value.compareTo(((StringValue) v).value) < 0);
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean gte(Value v) {
         if (v instanceof StringValue)
             return (value.compareTo(((StringValue) v).value) >= 0);
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
     public boolean gt(Value v) {
         if (v instanceof StringValue)
             return (value.compareTo(((StringValue) v).value) > 0);
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -115,7 +119,7 @@ public class StringValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof StringValue) {
             return compareValuesOfTheSameInstance(v);
         }
-        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
-
 }

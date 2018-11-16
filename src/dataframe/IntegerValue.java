@@ -29,7 +29,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
             return new DoubleValue(value + Double.parseDouble(v.toString()));
         else if (v instanceof FloatValue)
             return new FloatValue(value + Float.parseFloat(v.toString()));
-        throw new IllegalArgumentException("Different objects' types.");
+        throw new IllegalArgumentException("Incompatible types. Cannot add " + this.getClass()
+                + " and " + v.getClass().getName());
     }
 
 
@@ -40,7 +41,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
             return new DoubleValue(value - Double.parseDouble(v.toString()));
         else if (v instanceof FloatValue)
             return new FloatValue(value - Float.parseFloat(v.toString()));
-        throw new IllegalArgumentException("Different objects' types.");
+        throw new IllegalArgumentException("Incompatible types. Cannot subtract " + this.getClass()
+                + " and " + v.getClass().getName());
     }
 
 
@@ -52,20 +54,19 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         else if (v instanceof FloatValue)
             return new FloatValue(value * Float.parseFloat(v.toString()));
         else
-            throw new IllegalArgumentException("Different objects' types.");
+            throw new IllegalArgumentException("Incompatible types. Cannot multiply " + this.getClass()
+                    + " and " + v.getClass().getName());
     }
 
 
     public Value div(Value v) {
-        if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue) {
-            try {
-                return new DoubleValue(value / Double.parseDouble(v.toString()));
-
-            } catch (ArithmeticException e) {
-                System.out.println("Cannot divide by 0.");
-            }
-        }
-        throw new IllegalArgumentException("Different objects' types.");
+        if (v instanceof IntegerValue && ((IntegerValue) v).value == 0)
+            throw new ArithmeticException("/ by zero.");
+        else if (v instanceof FloatValue || v instanceof DoubleValue ||
+                (v instanceof IntegerValue && ((IntegerValue) v).value != 0))
+            return new DoubleValue(value / Double.parseDouble(v.toString()));
+        throw new IllegalArgumentException("Incompatible types. Cannot divide " + this.getClass()
+                + " and " + v.getClass().getName());
     }
 
 
@@ -79,7 +80,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         else if (v instanceof FloatValue)
             return new FloatValue((float) Math.pow(value, Double.parseDouble(v.toString())));
         else
-            throw new IllegalArgumentException("Different objects' types.");
+            throw new IllegalArgumentException("Incompatible types. Cannot do exponentiation on " + this.getClass()
+                    + " and " + v.getClass().getName());
     }
 
 
@@ -87,7 +89,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value == Integer.parseInt(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -95,7 +98,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value <= Integer.parseInt(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -103,7 +107,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value < Integer.parseInt(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -111,7 +116,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value >= Integer.parseInt(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -119,7 +125,8 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value >= Integer.parseInt(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -144,6 +151,18 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
 
 
     public Value create(String s) {
+        int i = 0;
+        int len = s.length();
+        boolean correct = false;
+        while (i < len) {
+            char digit = s.charAt(i);
+            if (((int) digit >= 48 && (int) digit <= 57) || (int) digit == 45) {
+                correct = true;
+            }
+            else
+                throw new NumberFormatException();
+            i++;
+        }
         value = Integer.parseInt(s);
         return this;
     }
@@ -157,6 +176,7 @@ public class IntegerValue extends Value implements Cloneable, Comparable<Value> 
     public int compareTo(Value v) {
         if (v instanceof IntegerValue)
             return compareValuesOfTheSameInstance(v);
-        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 }

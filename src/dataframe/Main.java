@@ -26,11 +26,42 @@ public class Main {
 
         df1.addRow(new String[]{"a", "10", "20"});
         df1.addRow(new String[]{"b", "11", "100"});
-        df1.addRow(new String[]{"a", "10", "1000"});
+        df1.addRow(new String[]{"a", "30", "1000"});
         df1.addRow(new String[]{"b", "7", "-1"});
         df1.addRow(new String[]{"b", "7", "0"});
         df1.addRow(new String[]{"c", "3", "-7"});
+
         df1.print("DF1");
+
+
+        df1.mulColByValue(1, new IntegerValue(3));
+        df1.print("DF1 after multiplying second col by 3");
+
+        df1.divColByValue(1,new IntegerValue(3));
+        df1.print("DF1 after dividing second col by 3");
+
+        System.out.println("\nChecking arithmetic operations on second and third column: ");
+        System.out.println("Multiplying: ");
+        ArrayList<Value> col1Xcol2 = df1.mulColByCol(1,2);
+        for (Value v : col1Xcol2)
+            System.out.print(v + "\t");
+
+        System.out.println("\nAdding: ");
+        ArrayList<Value> col1Pluscol2 = df1.addTwoCols(1,2);
+        for (Value v : col1Pluscol2)
+            System.out.print(v + "\t");
+
+        System.out.println("\nSubtracting: ");
+        ArrayList<Value> col1Minuscol2 = df1.subTwoCols(1,2);
+        for (Value v : col1Minuscol2)
+            System.out.print(v + "\t");
+
+        System.out.println("\nDividing: ");
+        ArrayList<Value> col1DivBycol2 = df1.divColByCol(1,2);
+        for (Value v : col1DivBycol2)
+            System.out.print(v + "\t");
+
+        System.out.println();
         DataFrame grp1 = df1.groupBy("id").max();
         grp1.print("Select max, group by id");
 
@@ -42,6 +73,7 @@ public class Main {
 
         DataFrame df2 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\groupby.csv", types2);
         System.out.println("Loaded " + df2.size() + " records.");
+
 
         DataFrame grp2 = df2.groupBy("id").max();
         grp2.print("Select max, grouped by id, groupby.csv");
@@ -57,5 +89,6 @@ public class Main {
 
         DataFrame grp3 = df3.groupBy(new String[]{"id","date"}).min();
         grp3.print("Select min, grouped by id, date, groubymulti.csv");
+
     }
 }

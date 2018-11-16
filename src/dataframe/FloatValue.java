@@ -27,7 +27,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
             return new FloatValue(value + Float.parseFloat(v.toString()));
         }
         else {
-            throw new IllegalArgumentException("Different objects' types.");
+            throw new IllegalArgumentException("Incompatible types. Cannot add " + this.getClass()
+                    + " and " + v.getClass().getName());
         }
     }
 
@@ -37,7 +38,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
             return new FloatValue(value - Float.parseFloat(v.toString()));
         }
         else {
-            throw new IllegalArgumentException("Different objects' types.");
+            throw new IllegalArgumentException("Incompatible types. Cannot subtract " + this.getClass()
+                    + " and " + v.getClass().getName());
         }
     }
 
@@ -54,15 +56,10 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
 
     public Value div(Value v) {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue) {
-            try {
-                return new FloatValue(value / Float.parseFloat(v.toString()));
-
-            } catch (ArithmeticException e) {
-                System.out.println("Cannot divide by 0.");
-            }
-
+            return new FloatValue(value / Float.parseFloat(v.toString()));
         }
-        throw new IllegalArgumentException("Different objects' types.");
+        throw new IllegalArgumentException("Incompatible types. Cannot divide " + this.getClass()
+                + " and " + v.getClass().getName());
     }
 
 
@@ -72,7 +69,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
             return new FloatValue(doublePow.floatValue());
         }
         else {
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types. Cannot do exponentiation on " + this.getClass()
+                    + " and " + v.getClass().getName());
         }
     }
 
@@ -81,7 +79,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value == Float.parseFloat(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -89,7 +88,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value <= Float.parseFloat(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -97,7 +97,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value < Float.parseFloat(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -105,7 +106,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value >= Float.parseFloat(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -113,7 +115,8 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         if (v instanceof IntegerValue || v instanceof FloatValue || v instanceof DoubleValue)
             return value > Float.parseFloat(v.toString());
         else
-            throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+            throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                    + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 
 
@@ -138,6 +141,19 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
 
 
     public Value create(String s) {
+        int i = 0;
+        int len = s.length();
+        boolean correct = false;
+        while (i < len) {
+            char digit = s.charAt(i);
+            if (((int) digit >= 48 && (int) digit <= 57) || (int) digit == 45 || (int) digit == 46
+                    || (int) digit == 70 || (int) digit == 102 || (int)digit == 101) {
+                correct = true;
+            }
+            else
+                throw new NumberFormatException();
+            i++;
+        }
         value = Float.parseFloat(s);
         return this;
     }
@@ -147,9 +163,11 @@ public class FloatValue extends Value implements Cloneable, Comparable<Value> {
         return (FloatValue) super.clone();
     }
 
-    public int compareTo(Value v){
+
+    public int compareTo(Value v) {
         if (v instanceof FloatValue)
             return compareValuesOfTheSameInstance(v);
-        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 }

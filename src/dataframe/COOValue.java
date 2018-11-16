@@ -31,27 +31,27 @@ public class COOValue extends Value implements Cloneable, Comparable<Value> {
 
 
     public Value add(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value sub(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value mul(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value div(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public Value pow(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
@@ -61,22 +61,22 @@ public class COOValue extends Value implements Cloneable, Comparable<Value> {
 
 
     public boolean lte(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public boolean lt(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public boolean gte(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
     public boolean gt(Value v) {
-        throw new IllegalArgumentException("Invalid operation.");
+        throw new IllegalArgumentException("Invalid operation for " + this.getClass().getName() + ".");
     }
 
 
@@ -106,19 +106,22 @@ public class COOValue extends Value implements Cloneable, Comparable<Value> {
                 "COOValue objects are accessible only after converting DataFrame to SparseDataFrame.");
     }
 
+
     public StringValue clone() throws CloneNotSupportedException {
         return (StringValue) super.clone();
     }
 
-    public int compareTo(Value v){
-        if (v instanceof COOValue){
-            if (first==((COOValue) v).first && second.eq(((COOValue) v).second))
+
+    public int compareTo(Value v) {
+        if (v instanceof COOValue) {
+            if (first == ((COOValue) v).first && second.eq(((COOValue) v).second))
                 return 0;
-            else if (first<((COOValue) v).first || second.lt(((COOValue) v).second))
+            else if (first < ((COOValue) v).first || second.lt(((COOValue) v).second))
                 return -1;
             else
                 return 1;
         }
-        throw new IllegalArgumentException("Different objects' types. Cannot compare.");
+        throw new IllegalArgumentException("Incompatible types given: " + this.getClass()
+                + " and " + v.getClass().getName() + ". Cannot compare.");
     }
 }
