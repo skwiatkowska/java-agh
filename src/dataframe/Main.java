@@ -49,10 +49,6 @@ public class Main {
         for (Value v : col1Minuscol2)
             System.out.print(v + "\t");
 
-        System.out.println("\nDividing: ");
-        ArrayList<Value> col1DivBycol2 = df1.divColByCol(1,2);
-        for (Value v : col1DivBycol2)
-            System.out.print(v + "\t");
 
         System.out.println();
         DataFrame grp1 = df1.groupBy("id").max();
