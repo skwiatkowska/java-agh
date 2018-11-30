@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="java-agh:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_agh_jar</output-path>
+    <root id="archive" name="java-agh.jar">
+      <element id="module-output" name="java-agh" />
+    </root>
+  </artifact>
+</component>

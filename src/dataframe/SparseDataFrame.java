@@ -167,16 +167,6 @@ public class SparseDataFrame extends DataFrame {
     }
 
 
-    public void print(String name) {
-        for (int i = 0; i < this.names.size(); i++) {
-            for (Object c : this.data.get(i)) {
-                System.out.print("(" + ((COOValue) c).first + ", " + ((COOValue) c).second + ")" + "\t");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
 
     public ArrayList get(String colname) {
         for (int i = 0; i < names.size(); i++) {

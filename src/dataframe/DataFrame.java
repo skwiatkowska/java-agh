@@ -11,16 +11,16 @@ import java.util.TreeMap;
 
 
 public class DataFrame {
-    protected ArrayList<String> names;
-    protected ArrayList<Class<? extends Value>> types;
-    protected ArrayList<ArrayList<Value>> data = new ArrayList<>();
+    public ArrayList<String> names;
+    public ArrayList<Class<? extends Value>> types;
+    public ArrayList<ArrayList<Value>> data = new ArrayList<>();
 
 
     public DataFrame(ArrayList<String> _names, ArrayList<Class<? extends Value>> _types) {
         names = _names;
         types = _types;
         for (int i = 0; i < _names.size(); i++) {
-            data.add(new ArrayList<Value>());
+            data.add(new ArrayList<>());
         }
     }
 
@@ -44,11 +44,15 @@ public class DataFrame {
 
             String line;
 
+            int rowNumber = 0;
             while ((line = br.readLine()) != null) {
                 String[] row = line.split(separator);
+                if(row.length != types.size())
+                    throw new ArrayIndexOutOfBoundsException("Wrong row " + rowNumber + " size.");
                 for (int i = 0; i < types.size(); i++) {
                     data.get(i).add(createValueOfExtactType(row[i], i));
                 }
+                rowNumber++;
             }
         } catch (FileNotFoundException e) {
             System.out.println("Wrong file path or there is not such file.");
@@ -81,6 +85,7 @@ public class DataFrame {
 
             String line;
 
+            int rowNumber = 0;
             while ((line = br.readLine()) != null) {
                 if (header) {
                     String[] _names = line.split(separator);
@@ -89,9 +94,12 @@ public class DataFrame {
                     continue;
                 }
                 String[] row = line.split(separator);
+                if(row.length != types.size())
+                    throw new ArrayIndexOutOfBoundsException("Wrong row " + rowNumber + " size.");
                 for (int i = 0; i < types.size(); i++) {
                     data.get(i).add(createValueOfExtactType(row[i], i));
                 }
+                rowNumber++;
             }
         } catch (FileNotFoundException e) {
             System.out.println("Wrong file path or there is not such file.");
@@ -188,7 +196,7 @@ public class DataFrame {
             Value v = Value.getInstance(this.types.get(i)).create(strValue);
             return v;
         } catch (NumberFormatException e) {
-            System.err.println("For input data: " + strValue);
+            //System.err.println("For input data: " + strValue);
             int lineNumber = data.get(i).size();
             throw new InconsistentColumnTypeException(names.get(i), lineNumber);
         }
@@ -201,7 +209,7 @@ public class DataFrame {
                 return i;
             }
         }
-        throw new IllegalArgumentException("The " + colname + " column not found.");
+        throw new IllegalArgumentException("The '" + colname + "' column not found.");
     }
 
 
@@ -330,29 +338,6 @@ public class DataFrame {
         return newDf;
     }
 
-
-    public void print(String name) {
-        /*
-        for (int i = 0; i < this.types.size(); i++) {
-            for (int j = 0; j < data.get(i).size(); j++) {
-                System.out.print(data.get(i).get(j) + "\t");
-            }
-            System.out.println();
-        }*/
-        System.out.println(name + ": ");
-        for (String s : names) {
-            System.out.print(s + "\t");
-        }
-
-        System.out.println();
-        for (int i = 0; i < data.get(0).size(); i++) {
-            for (int j = 0; j < this.names.size(); j++) {
-                System.out.print(data.get(j).get(i) + "\t");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 
 
     public boolean checkIfAllElementsAreEqual() {
