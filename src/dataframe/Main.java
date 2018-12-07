@@ -6,12 +6,34 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] argv) {
-        IntegerValue intv = new IntegerValue();
-        DoubleValue dbv = new DoubleValue();
-        FloatValue flv = new FloatValue();
-        DateTimeValue datev = new DateTimeValue();
-        StringValue strv = new StringValue();
+        ArrayList<Class<? extends Value>> types2 = new ArrayList<>();
+        types2.add(new StringValue().getClass());
+        types2.add(new DateTimeValue().getClass());
+        types2.add(new FloatValue().getClass());
+        types2.add(new FloatValue().getClass());
 
+        DataFrame df = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\A.csv", types2);
+        DataFrameDB db = new DataFrameDB(df, "dataframe");
+        DataFrame d = db.select("SELECT id, max(total) FROM dataframe group by id");
+        //d.print("");
+        //DataFrame d2 = db.select("SELECT id, max(date), max(total), max(val) FROM dataframe group by id, date");
+        //d2.print("");
+        //DataFrame d3 = db.groupBySql("id, date", "max");
+        //d3.print("");
+
+
+        long startTime = System.currentTimeMillis();
+        db.select("SELECT id, max(date), max(total), max(val) FROM dataframe group by id, date");
+        //db.groupBySql("id, date", "max");
+        long timeStamp = System.currentTimeMillis() - startTime;
+        System.out.println("Czas wykonania przez bazę danych: " + timeStamp + " ms");
+
+        long startTime2 = System.currentTimeMillis();
+        df.groupBy(new String[]{"id", "date"}).max();
+        long timeStamp2 = System.currentTimeMillis() - startTime2;
+        System.out.println("Czas wykonania przez własną funkcję: " + timeStamp2 + "ms");
+
+        /*
 
         ArrayList<Class<? extends Value>> types1 = new ArrayList<>();
         types1.add(strv.getClass());
@@ -75,6 +97,6 @@ public class Main {
         System.out.println("Loaded " + df3.size() + " records.");
 
         DataFrame grp3 = df3.groupBy(new String[]{"id","date"}).min();
-
+*/
     }
 }

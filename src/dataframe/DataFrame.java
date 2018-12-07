@@ -181,6 +181,29 @@ public class DataFrame {
         return sumDiffsSquared.div(listSizeMinusOne);
     }
 
+    public void print(String name) {
+        /*
+        for (int i = 0; i < this.types.size(); i++) {
+            for (int j = 0; j < data.get(i).size(); j++) {
+                System.out.print(data.get(i).get(j) + "\t");
+            }
+            System.out.println();
+        }*/
+        System.out.println(name + ": ");
+        for (String s : names) {
+            System.out.print(s + "\t");
+        }
+
+        System.out.println();
+        for (int i = 0; i < data.get(0).size(); i++) {
+            for (int j = 0; j < this.names.size(); j++) {
+                System.out.print(data.get(j).get(i) + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 
     public void addRow(String[] values) {
         if (values.length != names.size())
