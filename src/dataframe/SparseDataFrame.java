@@ -167,7 +167,6 @@ public class SparseDataFrame extends DataFrame {
     }
 
 
-
     public ArrayList get(String colname) {
         for (int i = 0; i < names.size(); i++) {
             if (names.get(i).equals(colname)) {

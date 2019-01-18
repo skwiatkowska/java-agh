@@ -183,9 +183,9 @@ public class DataFrame {
 
     public void print(String name) {
         /*
-        for (int i = 0; i < this.types.size(); i++) {
-            for (int j = 0; j < data.get(i).size(); j++) {
-                System.out.print(data.get(i).get(j) + "\t");
+        for (int start = 0; start < this.types.size(); start++) {
+            for (int j = 0; j < data.get(start).size(); j++) {
+                System.out.print(data.get(start).get(j) + "\t");
             }
             System.out.println();
         }*/
@@ -475,6 +475,7 @@ public class DataFrame {
             groupingColNames = _groupingCols;
         }
 
+        public GroupedDataFrame(){}
 
         public DataFrame applyActionOnEachCol(String actionName) {
             ArrayList<Integer> groupingColIndexes = new ArrayList<>();
