@@ -22,15 +22,19 @@ public class Main {
         //d3.print("");
 
 
-        DataFrame df1 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\B.csv", types2);
-        DataFrameThreads df2 = new DataFrameThreads("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\B.csv", types2);
+        DataFrame df1 = new DataFrame("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\groupby.csv", types2);
+        DataFrameThreads df2 = new DataFrameThreads("C:\\Users\\Win10\\Documents\\java-agh\\src\\dataframe\\files-for-testing\\groupby.csv", types2);
 
-        for(int i = 0; i < 200; i++){
-            long startTime = System.nanoTime();
-            df1.groupBy(new String[]{"id","date"}).max();
-            long endTime = System.nanoTime();
-            System.out.println("id-date,df,"+(endTime - startTime)/1000000);
-        }
+       // for(int i = 0; i < 2; i++){
+        long startTime = System.nanoTime();
+        df1.groupBy(new String[]{"id"});
+        long endTime = System.nanoTime();
+        System.out.println("DataFrame: "+(endTime - startTime)/1000000);
+        long startTime2 = System.nanoTime();
+        df2.groupBy(new String[]{"id"});
+        long endTime2 = System.nanoTime();
+        System.out.println("DataFrameThreads: "+(endTime2 - startTime2)/1000000);
+       // }
     }
 }
 

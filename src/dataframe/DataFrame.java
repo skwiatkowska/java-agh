@@ -257,6 +257,7 @@ public class DataFrame {
                 stringBuilder.append((data.get(groupingColIndexes.get(j)).get(i)).toString());
             }
             String key = stringBuilder.toString();
+            //System.out.println(key);
 
             DataFrame smallDF;
             if (newTmap.containsKey(key)) {
